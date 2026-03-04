@@ -52,7 +52,7 @@ let questions: [Question] = [
     Question(
         id: 3,
         text: "Tu es licencié pour absence. Game Over! Ton score : 0.",
-        imageName: "viré",
+        imageName: "vire",
         answers: [
             Answer(text: "Redémarre une nouvelle partie.", nextQuestionId: 1, stressChange: 0, budgetChange:0),
         ]
@@ -94,7 +94,7 @@ let questions: [Question] = [
     Question(
         id: 8,
         text: "",
-        imageName: "réunion",
+        imageName: "reunion",
         answers: [
             Answer(text: "...", nextQuestionId: 11, stressChange: 0, budgetChange:0),
         ]
@@ -102,7 +102,7 @@ let questions: [Question] = [
     Question(
         id: 9,
         text: "",
-        imageName: "licencié",
+        imageName: "licencie",
         answers: [
             Answer(text: "...", nextQuestionId: 11, stressChange: 0, budgetChange:0),
         ]
@@ -128,7 +128,7 @@ let questions: [Question] = [
     Question(
         id: 12,
         text: "Ce sera mieux que pire, avant hier que demain!",
-        imageName: "couché",
+        imageName: "couche",
         answers: [
             Answer(text: "...", nextQuestionId: 0, stressChange: 0, budgetChange:0),
         ]
