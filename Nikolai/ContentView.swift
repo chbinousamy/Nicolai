@@ -24,7 +24,7 @@ struct Answer {
 let questions: [Question] = [
     Question(
         id: 0,
-        text: "Game Over ! Fin du jeu !",
+        text: "Game Over! Fin du jeu!",
         imageName: "",
         answers: [
             Answer(text: "Redémarre une nouvelle partie.", nextQuestionId: 1, stressChange: 0, budgetChange: 0),
