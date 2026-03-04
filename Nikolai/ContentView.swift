@@ -32,7 +32,7 @@ let questions: [Question] = [
     ),
     Question(
         id: 1,
-        text: "Il est 6h30 ton réveil sonne. Encore une journée à survivre. Tu es Nikolai, cadre sup’, bac+5, CDI. Tu as tout fait comme on t’a dit. Mais aujourd’hui, tout peut basculer. Que fais-tu ?",
+        text: "Il est 6h30 ton réveil sonne. Encore une journée à survivre. Tu es Nikolai, cadre sup’, bac+5, CDI. Tu as tout fait comme on t’a dit. Mais aujourd’hui, tout peut basculer! Que fais-tu ?",
         imageName: "reveil",
         answers: [
             Answer(text: "Je me lève et prends mon RER B comme d’habitude.", nextQuestionId: 2, stressChange: 20, budgetChange: -10),
