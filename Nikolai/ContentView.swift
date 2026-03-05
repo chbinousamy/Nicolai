@@ -164,20 +164,24 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            // Accessibility: screen identifier for current question
             if let question = currentQuestion {
                 Image(question.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 350)
                     .cornerRadius(10)
+                    .accessibilityIdentifier("question_image_\(question.id)")
                 
                 Text(question.text)
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
                     .padding()
+                    .accessibilityIdentifier("question_text_\(question.id)")
                 
                 Text("Stress : \(stress), Budget : \(budget)")
                     .font(.subheadline)
+                    .accessibilityIdentifier("status_bar")
 
                 ForEach(question.answers, id: \.text) { answer in
                     Button(action: {
@@ -194,6 +198,7 @@ struct ContentView: View {
                         }
                     }) {
                         Text(answer.text)
+                            .accessibilityIdentifier("answer_\(question.id)_\(answer.text)")
                             .frame(maxWidth: .infinity)
                             .padding(8)
                             .background(Color.blue)
@@ -204,8 +209,10 @@ struct ContentView: View {
             } else {
                 Text("Fin du jeu !")
                     .font(.title)
+                    .accessibilityIdentifier("game_over")
             }
         }
+        .accessibilityIdentifier("screen_question_\(currentQuestionId)")
         .padding()
     }
 }
