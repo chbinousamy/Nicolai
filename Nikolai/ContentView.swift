@@ -179,9 +179,11 @@ struct ContentView: View {
                     .padding()
                     .accessibilityIdentifier("question_text_\(question.id)")
                 
-                Text("Stress : \(stress), Budget : \(budget)")
-                    .font(.subheadline)
-                    .accessibilityIdentifier("status_bar")
+                HStack(spacing: 4) {
+                    Text("Stress : ").bold() + Text("\(stress), ") + Text("Budget : ").bold() + Text("\(budget)")
+                }
+                .font(.subheadline)
+                .accessibilityIdentifier("status_bar")
 
                 ForEach(question.answers, id: \.text) { answer in
                     Button(action: {
@@ -216,3 +218,4 @@ struct ContentView: View {
         .padding()
     }
 }
+
