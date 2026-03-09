@@ -46,6 +46,13 @@ jobs:
             -scheme Nikolai \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             test
+            
+      - name: Install provisioning profiles and certificates
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "${{ secrets.PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
+          echo "${{ secrets.CERTIFICATE_P12 }}" | base64 --decode > certificate.p12
+          security import certificate.p12 -P "${{ secrets.CERTIFICATE_PASSWORD }}"
 
       - name: Archive and Export .ipa
         run: |
@@ -54,13 +61,14 @@ jobs:
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
             -configuration Release \
-            -archivePath $PWD/build/MyApp.xcarchive \
+            -archivePath $PWD/build/Nikolai.xcarchive \
+            -allowProvisioningUpdates \
             archive
 
           # Exporte l'.ipa
           xcodebuild \
             -exportArchive \
-            -archivePath $PWD/build/MyApp.xcarchive \
+            -archivePath $PWD/build/Nikolai.xcarchive \
             -exportOptionsPlist ExportOptions.plist \
             -exportPath $PWD/build \
             -allowProvisioningUpdates
@@ -68,5 +76,5 @@ jobs:
       - name: Upload .ipa as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MyApp.ipa
-          path: build/MyApp.ipa
+          name: Nikolai.ipa
+          path: build/Nikolai.ipa
