@@ -17,11 +17,6 @@ jobs:
       - name: Select Xcode version
         run: sudo xcode-select -switch /Applications/Xcode.app # Remplace par la version d'Xcode qui supporte iOS 15
 
-      - name: Install dependencies (CocoaPods)
-        run: |
-          gem install cocoapods
-          pod install --project-directory=.
-
       - name: Build for iPhone 7 Plus (iOS 15)
         run: |
           xcodebuild \
