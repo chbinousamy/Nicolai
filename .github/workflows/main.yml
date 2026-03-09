@@ -18,12 +18,12 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode.app # Remplace par la version d'Xcode qui supporte iOS 15
 
       - name: Select Xcode version
-        run: xcodebuild -workspace MyProject.xcodeproj -list
+        run: xcodebuild -workspace Nicolai.xcodeproj -list
 
       - name: Build for iPhone 7 Plus (iOS 15)
         run: |
           xcodebuild \
-            -workspace MyProject.xcodeproj \ # Remplace par ton fichier .xcworkspace ou .xcodeproj
+            -workspace Nicolai.xcodeproj \ # Remplace par ton fichier .xcworkspace ou .xcodeproj
             -scheme MyScheme \ # Remplace par ton scheme
             -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
             clean build
@@ -31,7 +31,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           xcodebuild \
-            -workspace MyProject.xcodeproj \
+            -workspace Nicolai.xcodeproj \
             -scheme MyScheme \
             -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
             test
