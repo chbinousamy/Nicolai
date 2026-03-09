@@ -10,12 +10,12 @@ jobs:
     steps:
       - name: List available Xcode versions
         run: ls /Applications | grep Xcode
-
-      - name: List files in the project directory
-        run: ls -la
         
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: List files in the project directory
+        run: ls -la
 
       - name: Select Xcode version
         run: sudo xcode-select -switch /Applications/Xcode.app # Remplace par la version d'Xcode qui supporte iOS 15
