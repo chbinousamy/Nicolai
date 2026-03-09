@@ -1,0 +1,68 @@
+name: Build, Test, and Archive Xcode Project for iPhone 7 Plus (iOS 15)
+
+on:
+  push:
+    branches: [ main ] # Remplace par ta branche principale si nécessaire
+
+jobs:
+  build_test_archive:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app # Remplace par la version d'Xcode qui supporte iOS 15
+
+      - name: Install dependencies (CocoaPods)
+        run: |
+          gem install cocoapods
+          pod install --project-directory=.
+
+      - name: Build for iPhone 7 Plus (iOS 15)
+        run: |
+          xcodebuild \
+            -workspace MyProject.xcworkspace \ # Remplace par ton fichier .xcworkspace ou .xcodeproj
+            -scheme MyScheme \ # Remplace par ton scheme
+            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            clean build
+
+      - name: Run Unit Tests
+        run: |
+          xcodebuild \
+            -workspace MyProject.xcworkspace \
+            -scheme MyScheme \
+            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            test
+
+      - name: Run UI Tests
+        run: |
+          xcodebuild \
+            -workspace MyProject.xcworkspace \
+            -scheme MyScheme \
+            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            test
+
+      - name: Archive and Export .ipa
+        run: |
+          # Archive le projet
+          xcodebuild \
+            -workspace MyProject.xcworkspace \
+            -scheme MyScheme \
+            -configuration Release \
+            -archivePath $PWD/build/MyApp.xcarchive \
+            archive
+
+          # Exporte l'.ipa
+          xcodebuild \
+            -exportArchive \
+            -archivePath $PWD/build/MyApp.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath $PWD/build \
+            -allowProvisioningUpdates
+
+      - name: Upload .ipa as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MyApp.ipa
+          path: build/MyApp.ipa
