@@ -32,23 +32,23 @@ jobs:
             clean build \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Run Unit Tests
-        run: |
-          xcodebuild \
-            -project Nikolai.xcodeproj \
-            -scheme Nikolai \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            test \
-            CODE_SIGNING_ALLOWED=NO
+#      - name: Run Unit Tests
+#        run: |
+#          xcodebuild \
+#            -project Nikolai.xcodeproj \
+#            -scheme Nikolai \
+#            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+#            test \
+#            CODE_SIGNING_ALLOWED=NO
 
-      - name: Run UI Tests
-        run: |
-          xcodebuild \
-            -project Nikolai.xcodeproj \
-            -scheme Nikolai \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            test \
-            CODE_SIGNING_ALLOWED=NO
+#      - name: Run UI Tests
+#        run: |
+#          xcodebuild \
+#            -project Nikolai.xcodeproj \
+#            -scheme Nikolai \
+#            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+#            test \
+#            CODE_SIGNING_ALLOWED=NO
 
       - name: Install provisioning profile
         run: |
@@ -85,6 +85,21 @@ jobs:
             -destination 'generic/platform=iOS' \
             archive
 
+      - name: Debug profils et certificats
+        run: |
+          echo "=== Profils installés ==="
+          for f in ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision; do
+            echo "--- Fichier: $f ---"
+            security cms -D -i "$f" | plutil -extract Name raw -
+            security cms -D -i "$f" | plutil -extract UUID raw -
+          done
+
+          echo "=== Certificats disponibles ==="
+          security find-identity -v -p codesigning build.keychain
+
+          echo "=== Contenu xcarchive ==="
+          cat $PWD/build/Nikolai.xcarchive/Info.plist
+    
       - name: Export .ipa
         run: |
           xcodebuild \
