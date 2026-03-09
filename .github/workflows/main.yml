@@ -46,13 +46,22 @@ jobs:
             -scheme Nikolai \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             test
-            
-      - name: Install provisioning profiles and certificates
+    
+
+      - name: Install provisioning profile
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
-          echo "${{ secrets.IOS_CERTIFICATE_BASE64 }}" | base64 --decode > certificate.p12
-          security import certificate.p12 -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}"
+
+      - name: Install certificate
+        run: |
+          echo "${{ secrets.IOS_CERTIFICATE_BASE64 }}" | base64 --decode > certificat.p12
+          security create-keychain -p "" build.keychain
+          security import certificat.p12 -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -k build.keychain
+          security list-keychains -s build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
       - name: Archive and Export .ipa
         run: |
