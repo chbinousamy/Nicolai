@@ -28,7 +28,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,arch:arm64,OS=latest' \
+            -destination 'generic/platform=iOS Simulator' \
             clean build
 
       - name: Run Unit Tests
@@ -36,7 +36,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,arch:arm64,OS=latest' \
+            -destination 'generic/platform=iOS Simulator' \
             test
 
       - name: Run UI Tests
@@ -44,7 +44,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,arch:arm64,OS=latest' \
+            -destination 'generic/platform=iOS Simulator' \
             test
 
       - name: Archive and Export .ipa
