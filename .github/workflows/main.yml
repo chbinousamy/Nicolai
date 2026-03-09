@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: List available Xcode versions
         run: ls /Applications | grep Xcode
+
+      - name: List files in the project directory
+        run: ls -la
         
       - name: Checkout code
         uses: actions/checkout@v4
