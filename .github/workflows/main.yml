@@ -18,16 +18,16 @@ jobs:
         run: ls -la
 
       - name: Select Xcode version
-        run: sudo xcode-select -switch /Applications/Xcode.app # Remplace par la version d'Xcode qui supporte iOS 15
-
-      - name: Select Xcode version
+        run: sudo xcode-select -switch /Applications/Xcode.app
+        
+      - name: List Schemes
         run: xcodebuild -project Nikolai.xcodeproj -list
 
       - name: Build for iPhone 7 Plus (iOS 15)
         run: |
           xcodebuild \
-            -project Nikolai.xcodeproj \ # Remplace par ton fichier .xcworkspace ou .xcodeproj
-            -scheme Nikolai \ # Remplace par ton scheme
+            -project Nikolai.xcodeproj \
+            -scheme Nikolai \
             -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
             clean build
 
