@@ -36,7 +36,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             test
 
       - name: Run UI Tests
@@ -44,7 +44,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             test
 
       - name: Archive and Export .ipa
