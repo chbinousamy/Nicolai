@@ -62,7 +62,7 @@ jobs:
             -allowProvisioningUpdates
 
       - name: Upload .ipa as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: MyApp.ipa
           path: build/MyApp.ipa
