@@ -18,7 +18,7 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode.app # Remplace par la version d'Xcode qui supporte iOS 15
 
       - name: Select Xcode version
-        run: xcodebuild -workspace Nicolai.xcodeproj -list
+        run: xcodebuild -workspace MyProject.xcworkspace -list
 
       - name: Build for iPhone 7 Plus (iOS 15)
         run: |
