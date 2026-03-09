@@ -18,7 +18,7 @@ jobs:
         run: ls -la
 
       - name: Select Xcode version
-        run: sudo xcode-select -switch /Applications/Xcode.app
+        run: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
         
       - name: List Schemes
         run: xcodebuild -project Nikolai.xcodeproj -list
@@ -29,7 +29,8 @@ jobs:
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
             -destination 'generic/platform=iOS Simulator' \
-            clean build
+            clean build \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Run Unit Tests
         run: |
@@ -37,7 +38,8 @@ jobs:
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            test
+            test \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Run UI Tests
         run: |
@@ -45,42 +47,50 @@ jobs:
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            test
-    
+            test \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Install provisioning profile
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
+          echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > \
+          ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
 
       - name: Install certificate
         run: |
           echo "${{ secrets.IOS_CERTIFICATE_BASE64 }}" | base64 --decode > certificat.p12
-          security create-keychain -p "" build.keychain
-          security import certificat.p12 -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -k build.keychain
-          security list-keychains -s build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "" build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
-      - name: Archive and Export .ipa
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          security import certificat.p12 \
+            -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" \
+            -k build.keychain \
+            -T /usr/bin/codesign
+
+          security list-keychains -s build.keychain login.keychain
+
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+
+          security set-key-partition-list \
+            -S apple-tool:,apple: \
+            -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+
+      - name: Archive
         run: |
-          # Archive le projet
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
             -configuration Release \
             -archivePath $PWD/build/Nikolai.xcarchive \
-            -allowProvisioningUpdates \
             archive
 
-          # Exporte l'.ipa
+      - name: Export .ipa
+        run: |
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/Nikolai.xcarchive \
             -exportOptionsPlist ExportOptions.plist \
-            -exportPath $PWD/build \
-            -allowProvisioningUpdates
+            -exportPath $PWD/build
 
       - name: Upload .ipa as artifact
         uses: actions/upload-artifact@v4
