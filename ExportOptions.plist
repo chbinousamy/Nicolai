@@ -3,12 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>ad-hoc</string>
+    <string>development</string>
     <key>teamID</key>
     <string>7TFP7N9226</string>
     <key>uploadBitcode</key>
     <false/>
     <key>uploadSymbols</key>
     <false/>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.tonentreprise.nikolai</key>
+        <string>Nikolai</string>
+    </dict>
 </dict>
 </plist>
