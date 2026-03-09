@@ -18,7 +18,7 @@ jobs:
         run: ls -la
 
       - name: Select Xcode version
-        run: sudo xcode-select -switch /Applications/Xcode_16.0.app
+        run: sudo xcode-select -switch /Applications/Xcode.app
         
       - name: List Schemes
         run: xcodebuild -project Nikolai.xcodeproj -list
