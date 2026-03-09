@@ -50,9 +50,9 @@ jobs:
       - name: Install provisioning profiles and certificates
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "${{ secrets.PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
-          echo "${{ secrets.CERTIFICATE_P12 }}" | base64 --decode > certificate.p12
-          security import certificate.p12 -P "${{ secrets.CERTIFICATE_PASSWORD }}"
+          echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Nikolai.mobileprovision
+          echo "${{ secrets.IOS_CERTIFICATE_BASE64 }}" | base64 --decode > certificate.p12
+          security import certificate.p12 -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}"
 
       - name: Archive and Export .ipa
         run: |
