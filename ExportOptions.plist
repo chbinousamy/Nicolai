@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>development</string>
+    <string>debugging</string>
     <key>teamID</key>
     <string>7TFP7N9226</string>
     <key>uploadBitcode</key>
@@ -14,7 +14,7 @@
     <string>manual</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.tonentreprise.nikolai</key>
+        <key>com.chbinousamy.nikolai</key>
         <string>Nikolai</string>
     </dict>
 </dict>
