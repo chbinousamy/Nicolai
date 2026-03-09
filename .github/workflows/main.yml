@@ -1,4 +1,4 @@
-name: Build, Test, and Archive Xcode Project for iPhone 7 Plus (iOS 15)
+name: Build, Test, and Archive Xcode Project for iPhone
 
 on:
   push:
@@ -23,12 +23,12 @@ jobs:
       - name: List Schemes
         run: xcodebuild -project Nikolai.xcodeproj -list
 
-      - name: Build for iPhone 7 Plus (iOS 15)
+      - name: Build for iPhone
         run: |
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            -destination 'platform=iOS Simulator,OS=latest' \
             clean build
 
       - name: Run Unit Tests
@@ -36,7 +36,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            -destination 'platform=iOS Simulator,OS=latest' \
             test
 
       - name: Run UI Tests
@@ -44,7 +44,7 @@ jobs:
           xcodebuild \
             -project Nikolai.xcodeproj \
             -scheme Nikolai \
-            -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=15.5' \
+            -destination 'platform=iOS Simulator,OS=latest' \
             test
 
       - name: Archive and Export .ipa
