@@ -32,23 +32,23 @@ jobs:
             clean build \
             CODE_SIGNING_ALLOWED=NO
 
-#      - name: Run Unit Tests
-#        run: |
-#          xcodebuild \
-#            -project Nikolai.xcodeproj \
-#            -scheme Nikolai \
-#            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-#            test \
-#            CODE_SIGNING_ALLOWED=NO
+      - name: Run Unit Tests
+        run: |
+          xcodebuild \
+            -project Nikolai.xcodeproj \
+            -scheme Nikolai \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            test \
+            CODE_SIGNING_ALLOWED=NO
 
-#      - name: Run UI Tests
-#        run: |
-#          xcodebuild \
-#            -project Nikolai.xcodeproj \
-#            -scheme Nikolai \
-#            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-#            test \
-#            CODE_SIGNING_ALLOWED=NO
+      - name: Run UI Tests
+        run: |
+          xcodebuild \
+            -project Nikolai.xcodeproj \
+            -scheme Nikolai \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            test \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Install provisioning profile
         run: |
